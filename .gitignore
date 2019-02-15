@@ -1,0 +1,2 @@
+# Ignore the TAR files (container image) 
+*.tar

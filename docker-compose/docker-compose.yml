@@ -1,0 +1,84 @@
+# Docker Compose version
+version: '3'
+
+# Storage data
+#  to save the database locally
+volumes:
+  data:
+
+# Services (3): db, workbench, web
+services:
+  # -----------------------------------------
+  # db: database
+  db:
+    # Container image
+    image: mysql:5.6
+    # Container name
+    container_name: db-mysql
+    # Mapping ports
+    ports:
+      - "3306:3306"
+    # Storage data
+    #  volume of MySQL is save locally in 'volumes:data'
+    volumes:
+      - data:/var/lib/mysql
+    # Variables of this container image
+    #  MYSQL_ROOT_PASSWORD: define root password
+    #  MYSQL_DATABASE: your database name
+    environment:
+      - MYSQL_ROOT_PASSWORD: password
+      - MYSQL_DATABASE: app_development
+
+  # -----------------------------------------
+  # workbench: visual tool for the database
+  workbench:
+    # Container image
+    image: phpmyadmin/phpmyadmin:latest
+    # Container name
+    container_name: workbench-phpmyadmin
+    # Dependence
+    #  if db crash, workbench crash too
+    depends_on:
+      - db
+    # Links
+    #  means which 'workbench' can
+    #  link/access the 'db'
+    links:
+      - db
+    # Mapping ports
+    # access: http://localhost:8081
+    ports:
+      - 8081:80
+##    (uncomment) to connect an outside server
+#    environment:
+#      - PMA_ARBITRARY=1
+
+  # -----------------------------------------
+  # web: php server
+  web:
+    # Build the image
+    # .: ./Dockerfile
+    build: .
+    # Container name
+    container_name: web-php
+    # Dependence
+    depends_on:
+      - db
+    # Links
+    links:
+      - db
+    # Storage data
+    #  mapping my local volume to container
+    #   local: ./php
+    #   container: /var/www/html
+    volumes:
+      - ./php:/var/www/html
+    # Mapping ports
+    # access: http://localhost:8080
+    ports:
+      - 8080:80
+    # Enable access the container
+    #  -t: Talk to you (TTY)
+    #  -i: STDIN
+    stdin_open: true
+    tty: true
