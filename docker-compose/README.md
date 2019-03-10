@@ -118,10 +118,10 @@ services:
       - db
     # Storage data
     #  mapping my local volume to container
-    #   local: ./php
+    #   local: ~/www
     #   container: /var/www/html
     volumes:
-      - ./php:/var/www/html
+      - ~/www:/var/www/html
     # Mapping ports
     # access: http://localhost:8080
     ports:

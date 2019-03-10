@@ -3,10 +3,10 @@
 FROM php:7.2-apache
 
 # Install necessary libs
-RUN apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
+RUN apt-get update
+RUN apt-get install -y libfreetype6-dev
+RUN apt-get install -y libjpeg62-turbo-dev
+RUN apt-get install -y libpng-dev
 
 # Install php-core extension: mysqli
 #  php extensions: https://docs.docker.com/samples/library/php/

@@ -26,8 +26,8 @@ services:
     #  MYSQL_ROOT_PASSWORD: define root password
     #  MYSQL_DATABASE: your database name
     environment:
-      - MYSQL_ROOT_PASSWORD: password
-      - MYSQL_DATABASE: app_development
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "app_development"
 
   # -----------------------------------------
   # workbench: visual tool for the database
@@ -72,7 +72,7 @@ services:
     #   local: ./php
     #   container: /var/www/html
     volumes:
-      - ./php:/var/www/html
+      - ~/www:/var/www/html
     # Mapping ports
     # access: http://localhost:8080
     ports:
